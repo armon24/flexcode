@@ -1,3 +1,45 @@
+    <?php
+
+    if(isset($_POST['registerButton']))
+    {
+    echo "here";
+        echo $_POST["major"];
+        echo $_POST["studentid"];
+    }
+
+    $state="";
+    $major="";
+    $minor="";
+    $food="";
+    $hobby="";
+    $place="";
+    $dorm="";
+    $advice="";
+
+    $furtherError = false;
+
+    if(isset($_POST["state"]))          $state=$_POST["state"];
+    if(isset($_POST["major"]))          $major=$_POST["major"];
+    if(isset($_POST["minor"]))          $minor=$_POST["minor"];
+    if(isset($_POST["food"]))           $food=$_POST["food"]; 
+    if(isset($_POST["hobby"]))          $hobby=$_POST["hobby"];
+    if(isset($_POST["place"]))          $place=$_POST["place"];
+    if(isset($_POST["dorm"]))           $dorm=$_POST["dorm"];
+    if(isset($_POST["advice"]))         $advice=$_POST["advice"];
+
+    if(empty($state) || empty($major) 
+    || empty($minor) || empty($food) || empty($hobby)
+    || empty($place) || empty($dorm) || empty($advice))
+    {
+        
+        $furtherError=true;
+        session_start();
+        $_SESSION["furtherRegistrationError"] = $furtherError;
+
+        //echo "furtherError is true";
+    }
+    ?>
+    
     <br>
     <table>
 
@@ -66,7 +108,7 @@
             <label  id="type">What's your major? </label>
         </td>
         <td>
-            <input type="text" name="major" placeholder="Select a major" list="majorList" />
+            <input type="text" name="major" placeholder="Select a major" list="majorList" value='<?php echo $major;?>' />
                 
                 <datalist id="majorList">
                     <option value="Accounting and Information Systems">
@@ -78,6 +120,19 @@
                     <option value="Real Estate">
                     <option value="Not listed">
                 </datalist>
+        </td>
+        <td>
+            <?php
+                if(isset($furtherError) )
+                {
+                    // echo $furtherError."||".$major;
+                    if($furtherError && empty($major)) 
+                    {
+                        echo "<span class='errlabel'> Please select your major! </span>"; 
+                    }  
+                }
+                
+            ?>
         </td>
     </tr>
 
