@@ -10,7 +10,7 @@ h1 {
     text-align: center;
 }
 
-h1, h2, p, a {
+h1, h2, p, a, ul, ol, li {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #630031;
 }
@@ -21,4 +21,14 @@ h1, h2, p, a {
 
 nav {
     border: 2px;
+}
+
+.landing-container {
+    display: flex;
+}
+
+.landing-container>div {
+    margin: 10px;
+    padding: 20px;
+    font-size: 20px;
 }
