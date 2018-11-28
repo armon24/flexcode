@@ -70,7 +70,7 @@ if(isset($_POST["registerButton"]))
     || empty($dorm) || empty($advice))
     {
         $error=true;
-    }
+    } 
 
     if(!$error)
     {
@@ -89,8 +89,6 @@ if(isset($_POST["registerButton"]))
         //$sql = "INSERT INTO mentors (val) VALUES (val)";
         //else
         //$sql = "INSERT INTO mentees (val) VALUES (val)";
-
-        Header("Homepage.html");
     }
 
   }
@@ -103,8 +101,14 @@ if(isset($_POST["registerButton"]))
 
     <head>
         <!-- Background Stuff -->
-        <title> Register | MentorMatch </title>
-        <meta charset="utf-8"/>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Register | MentorMatch</title>
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="resources/jquery-3.1.1.min.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+        <link href="resources/css/styles.css" rel="stylesheet" />
 
         <!-- Link to our overall CSS sheet -->
 
@@ -237,6 +241,24 @@ if(isset($_POST["registerButton"]))
     </head>
 
     <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <img class="navbar-brand" src="images/vtlogo.png">
+                <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin Homepage</a>
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collpase navbar-collapse navHeaderCollapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="beforeloginlanding.html">Welcome</a></li>
+                        <li><a href="login.php">Log In</a></li>
+                        <li><a href="register.php">Create An Account</a></li>
+                    </ul>
+                </div>
+            </div>
+    </div>
 
         <h1>Pamplin MentorMatch</h1>       <!-- Should be replaced with an official image later -->
 
@@ -244,7 +266,7 @@ if(isset($_POST["registerButton"]))
 
         <p> Registration! </p>
 
-        <form id ="registerForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"> 
+        <form id ="registerForm" method="post" action="/flexcode/registersuccess.php"> 
 
             <table>
                 <tr>
