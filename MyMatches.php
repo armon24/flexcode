@@ -2,6 +2,7 @@
 
     //All user information to be displayed
     $match="";
+    $mentor=false;
     $studo="";
     $email="";
     $fName="";
@@ -24,22 +25,18 @@
     $studo = $_SESSION["studentID"];
 
     require_once("db.php");
-    $sql = "SELECT MentorID FROM Matches WHERE MenteeID='$studo'";
-    if ($sql != Null)
+    $sql = "SELECT MentorID FROM Matches WHERE MenteeID='$studo'";    
+    $result = $mydb ->query($sql);
+    $row = mysqli_fetch_array($result);
+    $match = $row["MenteeID"];
+    if ($match == NULL)
     {
-        $result = $mydb ->query($sql);
-        $row = mysqli_fetch_array($result);
-        $match = $row["MentorID"];
-    }
-    else
-    {
-        $sql = "SELECT MenteeID FROM Matches WHERE MentorID='$studo'";
+        $sql = "SELECT MenteeID FROM Matches WHERE MentorID='$studo'";    
         $result = $mydb ->query($sql);
         $row = mysqli_fetch_array($result);
         $match = $row["MenteeID"];
-    }
-    
-    
+        $mentor = true;
+    }        
 
     //Getting our Mentor or Mentee type
     //$type = $_COOKIE["mentormentee"];
@@ -51,13 +48,36 @@
     $row=mysqli_fetch_array($result);
 
     $email = $row["Email"];
-    $pid = $row["PID"];
     $fName = $row["FirstName"];
     $mName = $row["MiddleName"];
     $lName = $row["LastName"];
     $pName = $row["Nickname"];
     $gender = $row["Gender"];
-    $gradeLevel = $row["Grade"];    
+    $gradeLevel = $row["Grade"];
+    
+    if ($mentor)
+    {
+        require_once("db.php");
+        $sql = "SELECT * FROM Mentor where StudentID='$match'";
+        $result = $mydb->query($sql);
+        $row=mysqli_fetch_array($result);
+    }
+    else
+    {
+        require_once("db.php");
+        $sql = "SELECT * FROM Mentee where StudentID='$match'";
+        $result = $mydb->query($sql);
+        $row=mysqli_fetch_array($result);
+    }
+    
+    $type=$row["AdviceType"];
+    $state=$row["State"];
+    $major=$row["Major"];
+    $minor=$row["Minor"];
+    $food=$row["Eatery"];
+    $hobby=$row["Hobbies"];
+    $place=$row["Location"];
+    $dorm=$row["Dorm"];
     
 ?>
 
@@ -74,7 +94,7 @@
         <style>
             .card {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                max-width: 300px;
+                max-width: 600px;
                 margin: auto;
                 text-align: center;
             }
