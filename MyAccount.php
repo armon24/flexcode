@@ -264,7 +264,9 @@
                 <button class="edit">Edit Account</button>
             </a>
             
-            <button class="delete">Delete Account</button>
+            <a href="deleteAccount.php">
+                <button class="delete">Delete Account</button>
+            </a>
         </div>
 
     </body>
