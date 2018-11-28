@@ -23,7 +23,7 @@
     $dorm="";
     $advice="";
 
-    //Getting our PK, studentID
+    //Getting our PK from login, studentID
     session_start();
     $studo = $_SESSION["studentID"];
 
@@ -48,19 +48,39 @@
     //if statement checking the cookie for database for mentor/mentee status
 
     //SQL work to initialize other half of account variables from Mentor or Mentee table
-    // $sql2 = "SELECT * FROM User where StudentID='$studo'";
-    // $result2 = $mydb->query($sql2);
-    // $row2=mysqli_fetch_array($result2);
+    $sql2 = "SELECT * FROM Mentor where StudentID='$studo'";
+    $result2 = $mydb->query($sql2);
+    $row2=mysqli_fetch_array($result2);
 
-    // $state = $row["State"];
-    // $major = $row["Major"];
-    // $minor= $row["Minor"];
-    // $food = $row["Eatery"];
-    // $hobby = $row["Hobby"];
-    // $place = $row["Location"];
-    // $dorm = $row["Dorm"];
-    // $advice = $row["AdviceType"];
-    
+    if (isset($row2['State']))
+    {
+        $state = $row2["State"];
+        //echo $state;
+        $major = $row2["Major"];
+        $minor= $row2["Minor"];
+        $food = $row2["Eatery"];
+        $hobby = $row2["Hobbies"];
+        $place = $row2["Location"];
+        $dorm = $row2["Dorm"];
+        $advice = $row2["AdviceType"];
+    }
+    else
+    {
+        $sql2 = "SELECT * FROM Mentee where StudentID='$studo'";
+        $result2 = $mydb->query($sql2);
+        $row2=mysqli_fetch_array($result2);
+
+        $state = $row2["State"];
+        $major = $row2["Major"];
+        //echo $major;
+        $minor= $row2["Minor"];
+        $food = $row2["Eatery"];
+        $hobby = $row2["Hobbies"];
+        $place = $row2["Location"];
+        $dorm = $row2["Dorm"];
+        $advice = $row2["AdviceType"];
+    }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -76,14 +96,18 @@
         <style>
             .card {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                max-width: 300px;
+                max-width: 500px;
                 margin: auto;
                 text-align: center;
             }
 
             .left {
                 font-weight: bold;
+                text-align: left;
             }
+            /* .right {
+                text-align: right;
+            } */
 
             button {
                 border: none;
@@ -150,7 +174,7 @@
         <!-- Add icon library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             
-        <p> Welcome to the My Account page. Take a look at your user information and explore our options (but don't delete your account, we'll miss you)<p>
+        <p style="text-align: center;"> Welcome to the My Account page. Take a look at your user information and explore our options (but don't delete your account, we'll miss you)<p>
 
         <br>
         <div class="card">
@@ -186,12 +210,61 @@
                 echo "<label class='right'>$pid</label>";
             ?> </p>
 
+            <p> <?php 
+                echo "<label class='left'>Homestate: &nbsp &nbsp</label>";
+                echo "<label class='right'>$state</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Major: &nbsp &nbsp</label>";
+                echo "<label class='right'>$major</label>";
+            ?> </p>
+
+            <p> <?php 
+                if(is_null($minor))
+                {
+                    //don't display anything bc there is no required minor
+                }
+                else
+                {
+                    echo "<label class='left'>Minor: &nbsp &nbsp</label>";
+                    echo "<label class='right'>$minor</label>";
+                }
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Favorite campus eatery: &nbsp &nbsp</label>";
+                echo "<label class='right'>$food</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Hobby category: &nbsp &nbsp</label>";
+                echo "<label class='right'>$hobby</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Favorite campus location: &nbsp &nbsp</label>";
+                echo "<label class='right'>$place</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Dorm: &nbsp &nbsp</label>";
+                echo "<label class='right'>$dorm</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Primary advice category: &nbsp &nbsp</label>";
+                echo "<label class='right'>$advice</label>";
+            ?> </p>
             
             <!-- <a href="#"><i class="fa fa-dribbble"></i></a> 
             <a href="#"><i class="fa fa-twitter"></i></a> 
             <a href="#"><i class="fa fa-linkedin"></i></a> 
             <a href="#"><i class="fa fa-facebook"></i></a>  -->
-            <button class="edit">Edit Account</button>
+            <a href="editAccount.php">
+                <button class="edit">Edit Account</button>
+            </a>
+            
             <button class="delete">Delete Account</button>
         </div>
 
