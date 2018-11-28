@@ -25,13 +25,23 @@ $place="";
 $dorm="";
 $advice="";
 
-//Error-checking
-$error = false;
+//$error="false";
 
-if(isset($_POST["registerButton"]))
+//Error-checking
+$error = "false";
+$loginOK = null;
+echo "status of error at the beginning".$error."<br>";
+
+if(isset($_POST["doneButton"]))
   {
     //Setting PHP variables for register.php form variables  
-    if(isset($_POST["studentID"]))      $studentid=$_POST["studentID"];
+
+    //Getting our PK from login, studentID
+    session_start();
+    $studentIdent = $_SESSION["studentID"];
+    echo $studentIdent."<br>";
+    echo "status of error when button is clicked".$error."<br>";
+
     if(isset($_POST["email"]))          $email=$_POST["email"];
     if(isset($_POST["pid"]))            $pid=$_POST["pid"];
     if(isset($_POST["fName"]))          $fName=$_POST["fName"];
@@ -69,26 +79,72 @@ if(isset($_POST["registerButton"]))
     || empty($food) || empty($hobby) || empty($place)
     || empty($dorm) || empty($advice))
     {
-        $error=true;
+        $error="true";
+        echo "status of error when doing empty checks of everybox".": ".$error."<br>";
+    }
+    
+    if($error=="true")
+    {
+        $loginOK=true;
+        echo "login is true"."<br>";
     }
 
-    if(!$error)
+    if($loginOK==true)
     {
-        //last minute changes which would flag $loginOK traditionally
+        echo"insideloginif";
+        // setcookie("pidRegister", $pid, time()+60*60*24, "/");
 
-        setcookie("pidRegister", $pid, time()+60*60*24, "/");
-        setcookie("mentormentee", $type, time()+60*60*24, "/");
+        // setcookie("mentormentee", $type, time()+60*60*24, "/");
+        echo "before SQL methods";
+        echo $error;
+        require_once("db.php");
 
-        //Probably need to do an insert into the database here
+        //does insertions to the User database based on combinations of empty middlename and preferred name
+        if(empty($mName)==false && empty($pName)==false)
+        {
+            $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName='$mName', LastName='$lName', Nickname='$pName', Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
+            $result = $mydb->query($sql);
 
-        //require_once("db.php);
-        //$sql = "INSERT INTO users (val) VALUES (val)";
-        //$result = $mydb->query($sql);
+            echo "updated User with A middle name and A nickname";
+        }
+        elseif(empty($mName)==false && empty($pName)==true)
+        {
+            $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName='$mName', LastName='$lName', Nickname=NULL, Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
+            $result = $mydb->query($sql);
+    
+            echo "updated User with A middle name and no nickname";
+        }
+        elseif(empty($mName)==true && empty($pName)==false)
+        {
+            echo $dob;
+            $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName=NULL, LastName='$lName', Nickname='$pName', Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
+            $result = $mydb->query($sql);
+      
+            echo "updated User with no middle name and A nickname";
+        }
+        else
+        {
+            $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', Middlename=NULL, LastName='$lName', Nickname=NULL, Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
+            $result = $mydb->query($sql);
 
-        //if $_POST("roleType") == "mentor"
-        //$sql = "INSERT INTO mentors (val) VALUES (val)";
-        //else
-        //$sql = "INSERT INTO mentees (val) VALUES (val)";
+            echo "updated User with no middle name and no nickname";
+        }
+
+        //now the mentor and mentee database updating
+        if($type == "mentor")
+        {
+            $sql2 = "UPDATE Mentor SET `State`='$state', Major='$major', Minor='$minor', Eatery='$food', Hobbies='$hobby', `Location`='$place', Dorm='$dorm', AdviceType='$advice' WHERE StudentID='$studentIdent'";
+            $result2 = $mydb->query($sql2);
+          
+            echo "updated Mentor";
+        }
+        else //$type == "mentee"
+        {
+            $sql2 = "UPDATE Mentee SET `State`='$state', Major='$major', Minor='$minor', Eatery='$food', Hobbies='$hobby', `Location`='$place', Dorm='$dorm', AdviceType='$advice' WHERE StudentID='$studentIdent'";
+            $result2 = $mydb->query($sql2);
+       
+            echo "updated Mentee";
+        }
 
         Header("Homepage.html");
     }
@@ -103,7 +159,7 @@ if(isset($_POST["registerButton"]))
 
     <head>
         <!-- Background Stuff -->
-        <title> Register | MentorMatch </title>
+        <title> Edit Account | MentorMatch </title>
         <meta charset="utf-8"/>
 
         <!-- Link to our overall CSS sheet -->
@@ -238,16 +294,16 @@ if(isset($_POST["registerButton"]))
 
     <body>
 
-        <h1>Pamplin MentorMatch</h1>       <!-- Should be replaced with an official image later -->
+        <h1>Edit Account | Pamplin MentorMatch</h1>       <!-- Should be replaced with an official image later -->
 
         <p>Pamplin MentorMatch is a student-made and Pamplin-run program seeking to pair upperclassmen mentors and first-year students. </p>
 
-        <p> Registration! </p>
+        <p> Edit your account! </p>
 
         <form id ="registerForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"> 
 
             <table>
-                <tr>
+                <!-- <tr>
                     <td>
                         <label>Student ID</label>
                     </td>
@@ -282,7 +338,7 @@ if(isset($_POST["registerButton"]))
                         ?>
                     </td>
                     
-                </tr>
+                </tr> -->
 
                 <tr>
                     <td>
@@ -294,7 +350,7 @@ if(isset($_POST["registerButton"]))
 
                     <td>
                         <?php 
-                            if($error && empty($email)) 
+                            if($error=="true" && empty($email)) 
                             {
                                 echo "<span class='errlabel'> Please enter your valid VT email address! </span>"; 
                             }  
@@ -311,7 +367,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($pid)) 
+                            if($error=="true" && empty($pid)) 
                             {
                                 echo "<span class='errlabel'> Please enter your valid VT pid! </span>"; 
                             }  
@@ -328,7 +384,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($fName)) 
+                            if($error=="true" && empty($fName)) 
                             {
                                 echo "<span class='errlabel'> Please enter your first name! </span>"; 
                             }  
@@ -355,7 +411,7 @@ if(isset($_POST["registerButton"]))
 
                     <td>
                         <?php 
-                            if($error && empty($lName)) 
+                            if($error=="true" && empty($lName)) 
                             {
                                 echo "<span class='errlabel'> Please enter your last name! </span>"; 
                             }  
@@ -390,7 +446,7 @@ if(isset($_POST["registerButton"]))
 
                     <td>
                         <?php 
-                            if($error && empty($gender)) 
+                            if($error=="true" && empty($gender)) 
                             {
                                 echo "<span class='errlabel'> Please select an option! </span>"; 
                             }  
@@ -407,7 +463,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($dob)) 
+                            if($error=="true" && empty($dob)) 
                             {
                                 echo "<span class='errlabel'> Please enter your date of birth! </span>"; 
                             }  
@@ -433,7 +489,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($gradeLevel)) 
+                            if($error=="true" && empty($gradeLevel)) 
                             {
                                 echo "<span class='errlabel'> Please select your grade level! </span>"; 
                             }  
@@ -457,7 +513,7 @@ if(isset($_POST["registerButton"]))
 
                     <td>
                         <?php 
-                            if($error && empty($pass1)) 
+                            if($error=="true" && empty($pass1)) 
                             {
                                 echo "<span class='errlabel'> Please set up a password! </span>"; 
                             }  
@@ -475,7 +531,7 @@ if(isset($_POST["registerButton"]))
 
                     <td>
                         <?php 
-                            if($error && empty($pass2)) 
+                            if($error=="true" && empty($pass2)) 
                             {
                                 if(strcmp($pass1, $pass2) != 0)
                                 {
@@ -562,7 +618,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($state)) 
+                            if($error=="true" && empty($state)) 
                             {
                                 echo "<span class='errlabel'> Please select a US State! </span>"; 
                             }  
@@ -590,7 +646,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($major)) 
+                            if($error=="true" && empty($major)) 
                             {
                                 echo "<span class='errlabel'> Please select your major! </span>"; 
                             }  
@@ -617,7 +673,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($minor)) 
+                            if($error=="true" && empty($minor)) 
                             {
                                 echo "<span class='errlabel'> Please select your minor! </span>"; 
                             }  
@@ -646,9 +702,9 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($food)) 
+                            if($error=="true" && empty($food)) 
                             {
-                                echo "<span class='errlabel'> Please select a US State! </span>"; 
+                                echo "<span class='errlabel'> Please select a dining hall! </span>"; 
                             }  
                         ?>
                     </td>
@@ -671,9 +727,9 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($hobby)) 
+                            if($error=="true" && empty($hobby)) 
                             {
-                                echo "<span class='errlabel'> Please select a US State! </span>"; 
+                                echo "<span class='errlabel'> Please select a hobby category! </span>"; 
                             }  
                         ?>
                     </td>
@@ -703,7 +759,7 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($place)) 
+                            if($error=="true" && empty($place)) 
                             {
                                 echo "<span class='errlabel'> Please select a location on campus! </span>"; 
                             }  
@@ -748,9 +804,9 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($dorm)) 
+                            if($error=="true" && empty($dorm)) 
                             {
-                                echo "<span class='errlabel'> Please select a US State! </span>"; 
+                                echo "<span class='errlabel'> Please select a dorm! </span>"; 
                             }  
                         ?>
                     </td>
@@ -772,9 +828,9 @@ if(isset($_POST["registerButton"]))
                     </td>
                     <td>
                         <?php 
-                            if($error && empty($advice)) 
+                            if($error=="true" && empty($advice)) 
                             {
-                                echo "<span class='errlabel'> Please select a US State! </span>"; 
+                                echo "<span class='errlabel'> Please select a primary advice type! </span>"; 
                             }  
                         ?>
                     </td>
@@ -784,13 +840,18 @@ if(isset($_POST["registerButton"]))
                     
                     <td>
                         <br>
-                        <input class="hidden" type="submit" name="registerButton" value="Register!" />
+                        <input class="hidden" type="submit" name="doneButton" value="Submit Changes" />
                     </td>
+
                 </tr>  
 
             </table>
 
         </form>
+
+        <a href="Homepage.html">
+            <button class="hidden">Go back to homepage</button>
+        </a>
 
     </body>
 
