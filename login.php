@@ -24,7 +24,7 @@
     //If there are no errors in how we input, we must verify with the database
     if(!$error){
       require_once("db.php");
-      $sql = "select Password from user where ID='$pid'";
+      $sql = "select Password from User where StudentID='$pid'";
       $result = $mydb->query($sql);
 
       $row=mysqli_fetch_array($result);
@@ -40,11 +40,11 @@
       }
 
       if($loginOK) {
-        //set session variable to remember the pid on the homepage. 
+        //set session variable to remember the student ID on the homepage. 
         session_start();
-        $_SESSION["pid"] = $pid;
+        $_SESSION["studentID"] = $pid;
 
-        Header("Location:homepage.php");
+        Header("Location:Homepage.html");
       }
     }
   }
@@ -103,7 +103,7 @@
             <table>
                 <tr>
                     <td>
-                        <p class="boxFields">PID</p>
+                        <p class="boxFields">Student ID</p>
                     </td>
 
                     <td>
@@ -123,8 +123,8 @@
                         ?>  />
                         
                         <?php 
-                            if($error && empty($username)) 
-                                echo "<span class='errlabel'> Please enter a Virginia Tech PID! </span>"; 
+                            if($error && empty($pid)) 
+                                echo "<span class='errlabel'> Please enter your VT Student ID! </span>"; 
                         ?>
                         
                     </td>   

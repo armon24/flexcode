@@ -77,6 +77,7 @@ if(isset($_POST["registerButton"]))
         //last minute changes which would flag $loginOK traditionally
 
         setcookie("pidRegister", $pid, time()+60*60*24, "/");
+        setcookie("mentormentee", $type, time()+60*60*24, "/");
 
         //Probably need to do an insert into the database here
 
