@@ -25,6 +25,7 @@ nav {
 
 .landing-container {
     display: flex;
+    flex-direction: column;
 }
 
 .landing-container>div {
