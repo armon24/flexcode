@@ -2,7 +2,7 @@
 
     //All user information to be displayed
     $match="";
-    $mentor=false;
+    $mentor=true;
     $studo="";
     $email="";
     $fName="";
@@ -35,7 +35,7 @@
         $result = $mydb ->query($sql);
         $row = mysqli_fetch_array($result);
         $match = $row["MenteeID"];
-        $mentor = true;
+        $mentor = false;
     }        
 
     //Getting our Mentor or Mentee type
@@ -54,7 +54,6 @@
     $pName = $row["Nickname"];
     $gender = $row["Gender"];
     $gradeLevel = $row["Grade"];
-    
     if ($mentor)
     {
         require_once("db.php");
@@ -88,7 +87,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>My Account | MentorMatch </title>
+        <title>My Match | MentorMatch </title>
         <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
 
         <style>
@@ -155,9 +154,8 @@
                 </button>
                 <div class="collpase navbar-collapse navHeaderCollapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Homepage.html">Home</a></li>
-                        <li><a href="#">Mentor List</a></li>
-                        <li><a href="#">Mentee List</a></li>
+                        <li><a href="Homepage.html">Home</a></li>                        
+                        <li><a href="MyMatch.php">My Match</a></li>
                         <li><a href="MyAccount.html">My Account</a></li>
                     </ul>
                 </div>
@@ -181,20 +179,56 @@
                 }
             ?> </h1>
                 
-            <p> <?php
-                echo "<label class='left'>Grade Level: &nbsp &nbsp</label>";
-                echo "<label class='right'>$gradeLevel</label>";
-            ?> </p>
-            
             <p> <?php 
                 echo "<label class='left'>Email Address: &nbsp &nbsp</label>";
                 echo "<label class='right'>$email</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>PID: &nbsp &nbsp</label>";
-                echo "<label class='right'>$pid</label>";
+                echo "<label class='left'>Gender: &nbsp &nbsp</label>";
+                echo "<label class='right'>$gender</label>";
             ?> </p>
+
+            <p> <?php
+                echo "<label class='left'>Grade Level: &nbsp &nbsp</label>";
+                echo "<label class='right'>$gradeLevel</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>State: &nbsp &nbsp</label>";
+                echo "<label class='right'>$state</label>";
+            ?> </p>
+                        
+            <p> <?php 
+                echo "<label class='left'>Major: &nbsp &nbsp</label>";
+                echo "<label class='right'>$major</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Minor: &nbsp &nbsp</label>";
+                echo "<label class='right'>$minor</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Favorite Dining Hall: &nbsp &nbsp</label>";
+                echo "<label class='right'>$food</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Hobbies: &nbsp &nbsp</label>";
+                echo "<label class='right'>$hobby</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Favorite On-Campus Location: &nbsp &nbsp</label>";
+                echo "<label class='right'>$place</label>";
+            ?> </p>
+
+            <p> <?php 
+                echo "<label class='left'>Dorm: &nbsp &nbsp</label>";
+                echo "<label class='right'>$dorm</label>";
+            ?> </p>
+           
         </div>
 
     </body>
