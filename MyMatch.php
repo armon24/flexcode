@@ -156,7 +156,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="Homepage.html">Home</a></li>                        
                         <li><a href="MyMatch.php">My Match</a></li>
-                        <li><a href="MyAccount.html">My Account</a></li>
+                        <li><a href="MyAccount.php">My Account</a></li>
                     </ul>
                 </div>
             </div>

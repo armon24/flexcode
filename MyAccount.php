@@ -152,7 +152,7 @@
     <body>
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="container">
-                <img class="navbar-brand" src="images/vtlogo.png"></img>
+                <img class="navbar-brand" src="images/vtlogo.png" />
                 <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin</a>
                 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                     <span class="icon-bar"></span>
@@ -161,10 +161,9 @@
                 </button>
                 <div class="collpase navbar-collapse navHeaderCollapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Homepage.html">Home</a></li>
-                        <li><a href="#">Mentor List</a></li>
-                        <li><a href="#">Mentee List</a></li>
-                        <li><a href="MyAccount.html">My Account</a></li>
+                        <li><a href="Homepage.html">Home</a></li>                        
+                        <li><a href="MyMatch.php">My Match</a></li>
+                        <li><a href="MyAccount.php">My Account</a></li>
                     </ul>
                 </div>
             </div>
