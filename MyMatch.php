@@ -157,6 +157,7 @@
                         <li><a href="Homepage.html">Home</a></li>                        
                         <li><a href="MyMatch.php">My Match</a></li>
                         <li><a href="MyAccount.php">My Account</a></li>
+                        <li><a href="thankyou.html">Log-out</a></li>
                     </ul>
                 </div>
             </div>
