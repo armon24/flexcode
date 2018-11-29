@@ -105,10 +105,13 @@ if(isset($_POST["registerButton"]))
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Register | MentorMatch</title>
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
         <script src="resources/jquery-3.1.1.min.js"></script>
         <script src="resources/js/bootstrap.min.js"></script>
         <link href="resources/css/styles.css" rel="stylesheet" />
+
+        <!-- This line is the error! I have no idea why though. Maybe its overriding display options? -->
+
+        <!-- <link href="resources/css/bootstrap.min.css" rel="stylesheet" /> -->
 
         <!-- Link to our overall CSS sheet -->
 
