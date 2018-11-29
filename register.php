@@ -244,24 +244,26 @@ if(isset($_POST["registerButton"]))
     </head>
 
     <body>
-    <div class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-                <img class="navbar-brand" src="images/vtlogo.png">
-                <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin Homepage</a>
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="collpase navbar-collapse navHeaderCollapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="beforeloginlanding.html">Welcome</a></li>
-                        <li><a href="login.php">Log In</a></li>
-                        <li><a href="register.php">Create An Account</a></li>
-                    </ul>
+        <!-- Bootstrap import line doesn't work so I commented this out for now -->
+
+        <!-- <div class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <img class="navbar-brand" src="images/vtlogo.png">
+                    <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin Homepage</a>
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="collpase navbar-collapse navHeaderCollapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="beforeloginlanding.html">Welcome</a></li>
+                            <li><a href="login.php">Log In</a></li>
+                            <li><a href="register.php">Create An Account</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-    </div>
+        </div> -->
 
         <h1>Pamplin MentorMatch</h1>       <!-- Should be replaced with an official image later -->
 
