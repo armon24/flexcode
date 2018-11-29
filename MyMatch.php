@@ -1,18 +1,16 @@
 <?php
 
     //All user information to be displayed
+    $match="";
+    $mentor=true;
     $studo="";
     $email="";
-    $pid="";
     $fName="";
     $mName="";
     $lName="";
     $pName="";
     $gender="";
-    $dob="";
     $gradeLevel="";
-    $pass1="";
-    $pass2="";
     $type="";
     $state="";
     $major="";
@@ -21,66 +19,65 @@
     $hobby="";
     $place="";
     $dorm="";
-    $advice="";
 
-    //Getting our PK from login, studentID
+    //Getting our PK, studentID
     session_start();
     $studo = $_SESSION["studentID"];
+
+    require_once("db.php");
+    $sql = "SELECT MentorID FROM Matches WHERE MenteeID='$studo'";    
+    $result = $mydb ->query($sql);
+    $row = mysqli_fetch_array($result);
+    $match = $row["MenteeID"];
+    if ($match == NULL)
+    {
+        $sql = "SELECT MenteeID FROM Matches WHERE MentorID='$studo'";    
+        $result = $mydb ->query($sql);
+        $row = mysqli_fetch_array($result);
+        $match = $row["MenteeID"];
+        $mentor = false;
+    }        
 
     //Getting our Mentor or Mentee type
     //$type = $_COOKIE["mentormentee"];
     
     //SQL work to initialize half of account variables from User table
     require_once("db.php");
-    $sql = "SELECT * FROM User where StudentID='$studo'";
+    $sql = "SELECT * FROM User where StudentID='$match'";
     $result = $mydb->query($sql);
     $row=mysqli_fetch_array($result);
 
     $email = $row["Email"];
-    $pid = $row["PID"];
     $fName = $row["FirstName"];
     $mName = $row["MiddleName"];
     $lName = $row["LastName"];
     $pName = $row["Nickname"];
     $gender = $row["Gender"];
     $gradeLevel = $row["Grade"];
-
-    //if statement checking the cookie for database for mentor/mentee status
-
-    //SQL work to initialize other half of account variables from Mentor or Mentee table
-    $sql2 = "SELECT * FROM Mentor where StudentID='$studo'";
-    $result2 = $mydb->query($sql2);
-    $row2=mysqli_fetch_array($result2);
-
-    if (isset($row2['State']))
+    if ($mentor)
     {
-        $state = $row2["State"];
-        //echo $state;
-        $major = $row2["Major"];
-        $minor= $row2["Minor"];
-        $food = $row2["Eatery"];
-        $hobby = $row2["Hobbies"];
-        $place = $row2["Location"];
-        $dorm = $row2["Dorm"];
-        $advice = $row2["AdviceType"];
+        require_once("db.php");
+        $sql = "SELECT * FROM Mentor where StudentID='$match'";
+        $result = $mydb->query($sql);
+        $row=mysqli_fetch_array($result);
     }
     else
     {
-        $sql2 = "SELECT * FROM Mentee where StudentID='$studo'";
-        $result2 = $mydb->query($sql2);
-        $row2=mysqli_fetch_array($result2);
-
-        $state = $row2["State"];
-        $major = $row2["Major"];
-        //echo $major;
-        $minor= $row2["Minor"];
-        $food = $row2["Eatery"];
-        $hobby = $row2["Hobbies"];
-        $place = $row2["Location"];
-        $dorm = $row2["Dorm"];
-        $advice = $row2["AdviceType"];
+        require_once("db.php");
+        $sql = "SELECT * FROM Mentee where StudentID='$match'";
+        $result = $mydb->query($sql);
+        $row=mysqli_fetch_array($result);
     }
-
+    
+    $type=$row["AdviceType"];
+    $state=$row["State"];
+    $major=$row["Major"];
+    $minor=$row["Minor"];
+    $food=$row["Eatery"];
+    $hobby=$row["Hobbies"];
+    $place=$row["Location"];
+    $dorm=$row["Dorm"];
+    
 ?>
 
 <!DOCTYPE HTML>
@@ -90,24 +87,20 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>My Account | MentorMatch </title>
+        <title>My Match | MentorMatch </title>
         <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
 
         <style>
             .card {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                max-width: 500px;
+                max-width: 600px;
                 margin: auto;
                 text-align: center;
             }
 
             .left {
                 font-weight: bold;
-                text-align: left;
             }
-            /* .right {
-                text-align: right;
-            } */
 
             button {
                 border: none;
@@ -168,13 +161,10 @@
                 </div>
             </div>
         </div>
-        <h1>My Account</h1>
+        <h1>Its a Match!</h1>
 
         <!-- Add icon library -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            
-        <p style="text-align: center;"> Welcome to the My Account page. Take a look at your user information and explore our options (but don't delete your account, we'll miss you)<p>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">            
         <br>
         <div class="card">
 
@@ -189,60 +179,48 @@
                 }
             ?> </h1>
                 
-            <p> <?php
-                echo "<label class='left'>Grade Level: &nbsp &nbsp</label>";
-                echo "<label class='right'>$gradeLevel</label>";
-            ?> </p>
-
-            <p> <?php
-                echo "<label class='left'>MentorMatch Status: &nbsp &nbsp</label>";
-                echo "<label class='right'>Mentor</label>";
-            ?> </p>
-
             <p> <?php 
                 echo "<label class='left'>Email Address: &nbsp &nbsp</label>";
                 echo "<label class='right'>$email</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>PID: &nbsp &nbsp</label>";
-                echo "<label class='right'>$pid</label>";
+                echo "<label class='left'>Gender: &nbsp &nbsp</label>";
+                echo "<label class='right'>$gender</label>";
+            ?> </p>
+
+            <p> <?php
+                echo "<label class='left'>Grade Level: &nbsp &nbsp</label>";
+                echo "<label class='right'>$gradeLevel</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>Homestate: &nbsp &nbsp</label>";
+                echo "<label class='left'>State: &nbsp &nbsp</label>";
                 echo "<label class='right'>$state</label>";
             ?> </p>
-
+                        
             <p> <?php 
                 echo "<label class='left'>Major: &nbsp &nbsp</label>";
                 echo "<label class='right'>$major</label>";
             ?> </p>
 
             <p> <?php 
-                if(is_null($minor))
-                {
-                    //don't display anything bc there is no required minor
-                }
-                else
-                {
-                    echo "<label class='left'>Minor: &nbsp &nbsp</label>";
-                    echo "<label class='right'>$minor</label>";
-                }
+                echo "<label class='left'>Minor: &nbsp &nbsp</label>";
+                echo "<label class='right'>$minor</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>Favorite campus eatery: &nbsp &nbsp</label>";
+                echo "<label class='left'>Favorite Dining Hall: &nbsp &nbsp</label>";
                 echo "<label class='right'>$food</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>Hobby category: &nbsp &nbsp</label>";
+                echo "<label class='left'>Hobbies: &nbsp &nbsp</label>";
                 echo "<label class='right'>$hobby</label>";
             ?> </p>
 
             <p> <?php 
-                echo "<label class='left'>Favorite campus location: &nbsp &nbsp</label>";
+                echo "<label class='left'>Favorite On-Campus Location: &nbsp &nbsp</label>";
                 echo "<label class='right'>$place</label>";
             ?> </p>
 
@@ -250,21 +228,7 @@
                 echo "<label class='left'>Dorm: &nbsp &nbsp</label>";
                 echo "<label class='right'>$dorm</label>";
             ?> </p>
-
-            <p> <?php 
-                echo "<label class='left'>Primary advice category: &nbsp &nbsp</label>";
-                echo "<label class='right'>$advice</label>";
-            ?> </p>
-            
-            <!-- <a href="#"><i class="fa fa-dribbble"></i></a> 
-            <a href="#"><i class="fa fa-twitter"></i></a> 
-            <a href="#"><i class="fa fa-linkedin"></i></a> 
-            <a href="#"><i class="fa fa-facebook"></i></a>  -->
-            <a href="editAccount.php">
-                <button class="edit">Edit Account</button>
-            </a>
-            
-            <button class="delete">Delete Account</button>
+           
         </div>
 
     </body>
