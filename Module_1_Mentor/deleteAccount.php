@@ -76,7 +76,7 @@ if(isset($_POST["doneButton"]))
             require_once("db.php");
             $sql2 = "DELETE FROM user WHERE StudentID='$studentIdent'";
             $result2 = $mydb->query($sql2);
-            header("Location: afterdelete.html");
+            header("Location: /flexcode/afterdelete.html");
         }
         else //$type == "no"
         {

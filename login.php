@@ -44,10 +44,22 @@
         session_start();
         $_SESSION["studentID"] = $pid;
 
-        Header("Location:Homepage.html");
+        $sql = "SELECT * FROM User WHERE StudentID='$pid'";    
+        $result = $mydb ->query($sql);
+        $row = mysqli_fetch_array($result);
+        $isMentor = $row["StudentID"];
+
+        if ($isMentor != null)
+        {
+            Header("Location:Module_1_Mentor/Homepage.html");
+        }
+        else
+        {
+            Header("Location:Module_2_Mentee/Homepage.html");
+        }
         
         if ($pid == "987654321") {
-            Header("Location:adminHome.html");
+            Header("Location:Module_3_Admin/adminHome.html");
         }
 
       }
