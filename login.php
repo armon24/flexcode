@@ -45,6 +45,11 @@
         $_SESSION["studentID"] = $pid;
 
         Header("Location:Homepage.html");
+        
+        if ($pid == "987654321") {
+            Header("Location:adminHome.html");
+        }
+
       }
     }
   }

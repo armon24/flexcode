@@ -90,12 +90,12 @@ if(isset($_POST["doneButton"]))
 
     if($loginOK==true)
     {
-        echo"insideloginif";
+        //echo"insideloginif";
         // setcookie("pidRegister", $pid, time()+60*60*24, "/");
 
         // setcookie("mentormentee", $type, time()+60*60*24, "/");
-        echo "before SQL methods";
-        echo $error;
+        //echo "before SQL methods";
+        //echo $error;
         require_once("db.php");
 
         //does insertions to the User database based on combinations of empty middlename and preferred name
@@ -176,7 +176,7 @@ if(isset($_POST["doneButton"]))
             }
 
             .hidden {
-                visibility: hidden;
+                visibility: visible;
             };
 
             meter {
@@ -299,24 +299,26 @@ if(isset($_POST["doneButton"]))
 
     <body>
     <div class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-                <img class="navbar-brand" src="images/vtlogo.png">
-                <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin Homepage</a>
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="collpase navbar-collapse navHeaderCollapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Homepage.html">Home</a></li>
-                        <li><a href="#">My Matches</a></li>
-                        <li><a href="myaccount.php">My Account</a></li>
-                        <li><a href="beforeloginlanding.html">Log-out</a></li>
-                    </ul>
+            <div class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <img class="navbar-brand" src="images/vtlogo.png" />
+                    <a href="https://pamplin.vt.edu/" class="navbar-brand">Pamplin</a>
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="collpase navbar-collapse navHeaderCollapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="Homepage.html">Home</a></li>                        
+                            <li><a href="MyMatch.php">My Match</a></li>
+                            <li><a href="MyAccount.php">My Account</a></li>
+                            <li><a href="thankyou.html">Log-out</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-    </div>
+        </div>
 
         <h1>Edit Account | Pamplin MentorMatch</h1>       <!-- Should be replaced with an official image later -->
 
@@ -584,10 +586,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">Where are you from? </label>
+                        <label style="visibility: visible;" id="type">Where are you from? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="state" placeholder="Select a state" list="stateList" value='<?php echo $state?>'/>
+                        <input type="text" name="state" placeholder="Select a state" list="stateList" value='<?php echo $state?>'/>
                             
                             <datalist id="stateList">
                                 <option value="Alabama">
@@ -652,10 +654,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">What's your major? </label>
+                        <label id="type">What's your major? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="major" placeholder="Select a major" list="majorList" value='<?php echo $major;?>' />
+                        <input type="text" name="major" placeholder="Select a major" list="majorList" value='<?php echo $major;?>' />
                             
                             <datalist id="majorList">
                                 <option value="Accounting and Information Systems">
@@ -680,10 +682,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">What's your minor? (If none, select 'Not listed')</label>
+                        <label id="type">What's your minor? (If none, select 'Not listed')</label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="minor" placeholder="Select a minor" list="minorList" value='<?php echo $minor?>' />
+                        <input type="text" name="minor" placeholder="Select a minor" list="minorList" value='<?php echo $minor?>' />
                             
                             <datalist id="minorList">
                                 <option value="Digital Marketing Strategy">
@@ -707,10 +709,10 @@ if(isset($_POST["doneButton"]))
                 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">What's your favorite on-campus place to eat? </label>
+                        <label id="type">What's your favorite on-campus place to eat? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="food" placeholder="Select a dining hall" list="foodList" value='<?php echo $food?>' />
+                        <input type="text" name="food" placeholder="Select a dining hall" list="foodList" value='<?php echo $food?>' />
                             
                             <datalist id="foodList">
                                 <option value="Turner Place">
@@ -736,10 +738,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">What are your hobbies? </label>
+                        <label id="type">What are your hobbies? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="hobby" placeholder="Select a hobby" list="hobbyList" value='<?php echo $hobby?>'/>
+                        <input type="text" name="hobby" placeholder="Select a hobby" list="hobbyList" value='<?php echo $hobby?>'/>
                             
                             <datalist id="hobbyList">
                                 <option value="Art">            <label>(Ex: Photography, painting, etc.)</label>
@@ -761,10 +763,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">What's your favorite area on campus? </label>
+                        <label id="type">What's your favorite area on campus? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="place" placeholder="Select a place" list="placeList" value='<?php echo $place?>' />
+                        <input type="text" name="place" placeholder="Select a place" list="placeList" value='<?php echo $place?>' />
                             
                             <datalist id="placeList">
                                 <option value="Drillfield">
@@ -793,10 +795,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type">Where did you live/where are you living on-campus? </label>
+                        <label id="type">Where did you live/where are you living on-campus? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="dorm" placeholder="Select a dorm" list="dormList" value='<?php echo $dorm?>'/>
+                        <input type="text" name="dorm" placeholder="Select a dorm" list="dormList" value='<?php echo $dorm?>'/>
                             
                             <datalist id="dormList">
                                 <option value="East Ambler Johnston">
@@ -838,10 +840,10 @@ if(isset($_POST["doneButton"]))
 
                 <tr>
                     <td>
-                        <label class="hidden" id="type"> What kind of primary advice are you seeking? </label>
+                        <label id="type"> What kind of primary advice are you seeking? </label>
                     </td>
                     <td>
-                        <input class="hidden" type="text" name="advice" placeholder="Select a concept" list="adviceList" value='<?php echo $advice?>' />
+                        <input type="text" name="advice" placeholder="Select a concept" list="adviceList" value='<?php echo $advice?>' />
                             
                             <datalist id="adviceList">
                                 <option value="Academic"> <label>(Ex: course selection and Professor suggestions)</label>
@@ -864,7 +866,7 @@ if(isset($_POST["doneButton"]))
                     
                     <td>
                         <br>
-                        <input class="hidden" type="submit" name="doneButton" value="Submit Changes" />
+                        <input type="submit" name="doneButton" value="Submit Changes" />
                     </td>
 
                 </tr>  
