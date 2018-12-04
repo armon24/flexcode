@@ -1,0 +1,53 @@
+body {
+    background-color: #F5E3E0;
+}
+
+h1 {
+    text-align: center;
+}
+
+.forms {
+    text-align: center;
+}
+
+h1, h2, p, a, ul, ol, li {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #630031;
+}
+
+.nav-link {
+    font-size: 14pt;
+}
+
+nav {
+    border: 2px;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-container>div {
+    margin: 10px;
+    padding: 20px;
+    font-size: 20px;
+}
+.dean{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.classroom{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.students{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
