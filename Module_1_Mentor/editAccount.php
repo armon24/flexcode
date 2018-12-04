@@ -38,8 +38,6 @@ if(isset($_POST["doneButton"]))
     //Getting our PK from login, studentID
     session_start();
     $studentIdent = $_SESSION["studentID"];
-    echo $studentIdent."<br>";
-    echo "status of error when button is clicked".$error."<br>";
 
     if(isset($_POST["email"]))          $email=$_POST["email"];
     if(isset($_POST["pid"]))            $pid=$_POST["pid"];
@@ -79,13 +77,11 @@ if(isset($_POST["doneButton"]))
     || empty($dorm) || empty($advice))
     {
         $error="true";
-        echo "status of error when doing empty checks of everybox".": ".$error."<br>";
     }
     
     if($error=="true")
     {
         $loginOK=true;
-        echo "login is true"."<br>";
     }
 
     if($loginOK==true)
@@ -104,29 +100,29 @@ if(isset($_POST["doneButton"]))
             $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName='$mName', LastName='$lName', Nickname='$pName', Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
             $result = $mydb->query($sql);
 
-            echo "updated User with A middle name and A nickname";
+            //echo "updated User with A middle name and A nickname";
         }
         elseif(empty($mName)==false && empty($pName)==true)
         {
             $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName='$mName', LastName='$lName', Nickname=NULL, Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
             $result = $mydb->query($sql);
     
-            echo "updated User with A middle name and no nickname";
+            //echo "updated User with A middle name and no nickname";
         }
         elseif(empty($mName)==true && empty($pName)==false)
         {
-            echo $dob;
+            //echo $dob;
             $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', MiddleName=NULL, LastName='$lName', Nickname='$pName', Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
             $result = $mydb->query($sql);
       
-            echo "updated User with no middle name and A nickname";
+            //echo "updated User with no middle name and A nickname";
         }
         else
         {
             $sql = "UPDATE User SET Email='$email', PID='$pid', FirstName='$fName', Middlename=NULL, LastName='$lName', Nickname=NULL, Gender='$gender', DOB='$dob', Grade='$gradeLevel', `Password`='$pass1' WHERE StudentID='$studentIdent'";
             $result = $mydb->query($sql);
 
-            echo "updated User with no middle name and no nickname";
+            //echo "updated User with no middle name and no nickname";
         }
 
         //now the mentor and mentee database updating
@@ -135,14 +131,14 @@ if(isset($_POST["doneButton"]))
             $sql2 = "UPDATE Mentor SET `State`='$state', Major='$major', Minor='$minor', Eatery='$food', Hobbies='$hobby', `Location`='$place', Dorm='$dorm', AdviceType='$advice' WHERE StudentID='$studentIdent'";
             $result2 = $mydb->query($sql2);
           
-            echo "updated Mentor";
+            //echo "updated Mentor";
         }
         else //$type == "mentee"
         {
             $sql2 = "UPDATE Mentee SET `State`='$state', Major='$major', Minor='$minor', Eatery='$food', Hobbies='$hobby', `Location`='$place', Dorm='$dorm', AdviceType='$advice' WHERE StudentID='$studentIdent'";
             $result2 = $mydb->query($sql2);
        
-            echo "updated Mentee";
+            //echo "updated Mentee";
         }
 
         Header("Homepage.html");

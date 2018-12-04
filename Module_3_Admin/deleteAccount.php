@@ -52,7 +52,7 @@ if(isset($_POST["doneButton"]))
         //now the mentor and mentee database updating
         if($type == "yes")
         {
-            if(strcmp($mentor, "true") != 0)
+            if(strcmp($mentor, "true") == 0)
             {
                 require_once("db.php");
                 $sql5 = "DELETE FROM Matches WHERE MentorID='$studentIdent'";

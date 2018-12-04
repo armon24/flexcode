@@ -44,7 +44,7 @@
         session_start();
         $_SESSION["studentID"] = $pid;
 
-        $sql = "SELECT * FROM User WHERE StudentID='$pid'";    
+        $sql = "SELECT * FROM Mentor WHERE StudentID='$pid'";    
         $result = $mydb ->query($sql);
         $row = mysqli_fetch_array($result);
         $isMentor = $row["StudentID"];
